@@ -17,6 +17,40 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
+
+/**
+ * Register Admin Menu Page
+ */
+add_action( 'admin_menu', 'aqr_register_admin_page' );
+
+function aqr_register_admin_page() {
+    add_menu_page(
+        __( 'Auto Quote Reply', 'auto-quote-reply' ), // Page title
+        __( 'Quote Reply', 'auto-quote-reply' ),      // Menu title
+        'manage_options',                             // Capability
+        'auto-quote-reply',                           // Menu slug
+        'aqr_admin_page_content',                     // Callback function
+        'dashicons-email-alt',                        // Icon (WP Dashicons)
+        56                                            // Position (below WooCommerce ~55)
+    );
+}
+
+function aqr_admin_page_content() {
+    ?>
+    <div class="wrap">
+        <h1><?php _e( 'Auto Quote Reply', 'auto-quote-reply' ); ?></h1>
+        <p>
+            This plugin automatically responds to quote requests with product details and prices.  
+            No configuration is needed right now.  
+        </p>
+        <p>
+            <strong>Developer:</strong> <a href="https://github.com/Loai-amr" target="_blank">Loai Amr</a><br>
+            <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/loai-amrr/" target="_blank">Connect</a>
+        </p>
+    </div>
+    <?php
+}
+
 /**
  * Hook into YITH Request a Quote email action
  *
@@ -81,3 +115,4 @@ function aqr_send_customer_quote_reply( $raq_content, $raq_data ) {
     // Send the email
     wc_mail( $to, $subject, $message );
 }
+
